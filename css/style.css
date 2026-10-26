@@ -1,0 +1,4274 @@
+/* Pengaturan dasar */
+:root {
+  --cream: #f6efe7;
+  --cream-light: #fffaf4;
+  --brown: #79533e;
+  --brown-dark: #3f2b22;
+  --gold: #b28b64;
+  --white: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--white);
+  background: var(--cream);
+}
+
+/* Mengunci halaman sebelum undangan dibuka */
+body.invitation-locked {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Cover / pembuka */
+.cover {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 3rem 1.25rem;
+  overflow: hidden;
+  text-align: center;
+  background-image: url("../images/cover.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 45%;
+}
+
+/* Lapisan gelap agar teks tetap terbaca */
+.cover_overlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(34, 25, 20, 0.22), rgba(34, 25, 20, 0.62)),
+    linear-gradient(90deg, rgba(34, 25, 20, 0.22), transparent 55%, rgba(34, 25, 20, 0.18));
+}
+
+/* Ornamen dekoratif sederhana */
+.cover_ornament {
+  position: absolute;
+  width: 13rem;
+  height: 13rem;
+  border: 1px solid rgba(255, 244, 226, 0.48);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cover_ornament::before,
+.cover_ornament::after {
+  position: absolute;
+  content: "";
+  border: 1px solid rgba(255, 244, 226, 0.32);
+  border-radius: 50%;
+  inset: 0.65rem;
+}
+
+.cover_ornament::after {
+  inset: 1.3rem;
+}
+
+.cover_ornament_top {
+  top: -7rem;
+  right: -4rem;
+}
+
+.cover_ornament_bottom {
+  bottom: -8rem;
+  left: -4rem;
+}
+
+.cover_content {
+  width: min(100%, 42rem);
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  border: 1px solid rgba(255, 250, 244, 0.62);
+  background: rgba(52, 37, 29, 0.2);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(2px);
+  animation: cover-appear 900ms ease both;
+}
+
+.cover_eyebrow {
+  font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+}
+
+.cover_intro {
+  max-width: 28rem;
+  margin: 1.4rem auto 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+}
+
+.cover_names {
+  margin-top: 0.55rem;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(3.5rem, 10vw, 6.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  text-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.cover_names span {
+  color: #f0d4b4;
+}
+
+.cover_divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.1rem auto;
+  color: #f0d4b4;
+}
+
+.cover_divider span {
+  width: clamp(2rem, 9vw, 5rem);
+  height: 1px;
+  background: rgba(255, 244, 226, 0.75);
+}
+
+.cover_divider i {
+  font-size: 0.9rem;
+}
+
+.cover_date {
+  font-size: clamp(0.68rem, 1.7vw, 0.85rem);
+  letter-spacing: 0.2em;
+}
+
+.cover_guest_label {
+  margin-top: 2rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+}
+
+.cover_guest {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+}
+
+.cover_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 3rem;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  color: var(--white);
+  background: var(--brown);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.cover_button:hover {
+  background: #936c52;
+  transform: translateY(-2px);
+}
+
+.cover_button:focus-visible {
+  outline: 3px solid #f0d4b4;
+  outline-offset: 4px;
+}
+
+.cover_hint {
+  margin-top: 0.85rem;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* NAVIGASI UNDANGAN */
+
+.navbar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    width: 100%;
+    padding: 1rem 4%;
+
+    background: rgba(255, 250, 244, 0.96);
+    border-bottom: 1px solid rgba(151, 113, 78, 0.2);
+    box-shadow: 0 0.3rem 1rem rgba(91, 70, 54, 0.06);
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+
+    transition:
+        opacity 300ms ease,
+        transform 300ms ease,
+        visibility 300ms ease;
+}
+
+/* Navigasi muncul setelah tombol Buka Undangan diklik */
+.navbar.navbar_visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Logo */
+.navbar_logo {
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: 2rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar_logo span {
+    color: #b28a60;
+}
+
+/* Daftar menu */
+.navbar_menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.2rem;
+}
+
+/* Tautan navigasi */
+.navbar_link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.6rem 0;
+
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: color 200ms ease;
+}
+
+.navbar_link i {
+    font-size: 0.85rem;
+}
+
+/* Menu aktif dan efek hover */
+.navbar_link:hover,
+.navbar_link.active {
+    color: #a47a51;
+}
+
+/* NAVIGASI UNDANGAN */
+
+.navbar {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+
+    width: 100%;
+    padding: 1rem 4%;
+
+    background: rgba(255, 250, 244, 0.96);
+    border-bottom: 1px solid rgba(151, 113, 78, 0.2);
+    box-shadow: 0 0.3rem 1rem rgba(91, 70, 54, 0.06);
+    backdrop-filter: blur(12px);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+
+    transition:
+        opacity 300ms ease,
+        transform 300ms ease,
+        visibility 300ms ease;
+}
+
+.navbar.navbar_visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.navbar_logo {
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: 2rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.navbar_logo span {
+    color: #b28a60;
+}
+
+.navbar_menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.2rem;
+}
+
+.navbar_link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.6rem 0;
+
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: color 200ms ease;
+}
+
+.navbar_link i {
+    font-size: 0.85rem;
+}
+
+.navbar_link:hover,
+.navbar_link.active {
+    color: #a47a51;
+}
+
+/* HAMBURGER MENU */
+
+/* Tombol hamburger disembunyikan pada desktop */
+.navbar_toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+
+    border: 1px solid rgba(151, 113, 78, 0.3);
+    border-radius: 8px;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.navbar_toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+
+    border-radius: 2px;
+    background: #79533e;
+
+    transition: transform 200ms ease, opacity 200ms ease;
+}
+
+/* Animasi tiga garis menjadi X */
+.navbar_toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.navbar_toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.navbar_toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* SECTION 2: HOME / BERANDA */
+
+.home {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    padding: 3rem 6%;
+    overflow: hidden;
+
+    /* Background berbeda dari Cover */
+    background: linear-gradient(
+        135deg,
+        #f8f3eb 0%,
+        #efe4d5 50%,
+        #fffaf4 100%
+    );
+
+    color: #5b4636;
+}
+
+/* Ornamen dekoratif */
+
+.home_decor {
+    position: absolute;
+    z-index: -1;
+    width: 18rem;
+    height: 18rem;
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.home_decor::before,
+.home_decor::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(151, 113, 78, 0.2);
+    border-radius: 50%;
+}
+
+.home_decor::before {
+    inset: 1rem;
+}
+
+.home_decor::after {
+    inset: 2rem;
+}
+
+.home_decor_top {
+    top: -9rem;
+    left: -7rem;
+}
+
+.home_decor_bottom {
+    right: -7rem;
+    bottom: -9rem;
+}
+
+/* Header Home */
+
+.home_header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(151, 113, 78, 0.2);
+}
+
+.home_logo {
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: 2.8rem;
+    text-decoration: none;
+}
+
+.home_logo span {
+    color: #b28a60;
+}
+
+.home_header_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 1px solid rgba(151, 113, 78, 0.35);
+    border-radius: 50%;
+    color: #a47a51;
+    font-size: 1.1rem;
+}
+
+/* Konten Home */
+
+.home_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 3rem 0 1rem;
+    text-align: center;
+}
+
+/* Teks pembuka */
+
+.home_kicker {
+    margin-bottom: 1rem;
+    color: #a17c57;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    letter-spacing: 0.08rem;
+}
+
+.home_title {
+    margin-bottom: 1.2rem;
+    color: #5b4636;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+.home_description {
+    max-width: 34rem;
+    margin-bottom: 2rem;
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+/* Foto utama pasangan */
+
+.home_photo {
+    position: relative;
+    width: min(100%, 25rem);
+    margin: 0 auto 2rem;
+    padding: 0.7rem;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    box-shadow: 0 1rem 2.5rem rgba(91, 70, 54, 0.12);
+}
+
+.home_photo img {
+    display: block;
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.home_photo_frame {
+    position: absolute;
+    inset: 0.35rem;
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    pointer-events: none;
+}
+
+.home_photo_caption {
+    padding: 1rem 0 0.5rem;
+    color: #927456;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.25rem;
+    font-style: italic;
+}
+
+/* Nama pasangan */
+
+.home_names {
+    margin-bottom: 0.5rem;
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.home_names span {
+    padding: 0 0.3rem;
+    color: #b28a60;
+    font-size: 0.8em;
+}
+
+/* Tanggal pernikahan */
+
+.home_date {
+    margin-bottom: 1.5rem;
+    color: #927456;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.25rem;
+}
+
+/* Garis pemisah */
+
+.home_divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: min(100%, 15rem);
+    margin-bottom: 2rem;
+    color: #b28a60;
+}
+
+.home_divider span {
+    flex: 1;
+    height: 1px;
+    background: rgba(151, 113, 78, 0.4);
+}
+
+.home_divider i {
+    font-size: 1rem;
+}
+
+/* Tombol menuju section berikutnya */
+
+.home_next {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.5rem;
+    border: 1px solid #a9845e;
+    border-radius: 3rem;
+    color: #76583d;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: background 200ms ease, color 200ms ease,
+                transform 200ms ease;
+}
+
+.home_next i {
+    transition: transform 200ms ease;
+}
+
+.home_next:hover {
+    background: #8b6b4d;
+    color: #fffaf4;
+    transform: translateY(-2px);
+}
+
+.home_next:hover i {
+    transform: translateY(3px);
+}
+
+/* SECTION MEMPELAI */
+
+.mempelai {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: 6rem 6%;
+
+    color: #5b4636;
+    background: linear-gradient(
+        135deg,
+        #fffaf4 0%,
+        #f3e8da 50%,
+        #fdf8f1 100%
+    );
+}
+
+/* Ornamen dekoratif */
+
+.mempelai_decor {
+    position: absolute;
+    z-index: -1;
+
+    width: 18rem;
+    height: 18rem;
+
+    border: 1px solid rgba(151, 113, 78, 0.2);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.mempelai_decor::before,
+.mempelai_decor::after {
+    position: absolute;
+    content: "";
+
+    border: 1px solid rgba(151, 113, 78, 0.15);
+    border-radius: 50%;
+}
+
+.mempelai_decor::before {
+    inset: 1rem;
+}
+
+.mempelai_decor::after {
+    inset: 2rem;
+}
+
+.mempelai_decor_top {
+    top: -9rem;
+    right: -7rem;
+}
+
+.mempelai_decor_bottom {
+    bottom: -10rem;
+    left: -7rem;
+}
+
+/* Header */
+
+.mempelai_header {
+    width: min(100%, 42rem);
+    margin: 0 auto 3.5rem;
+
+    text-align: center;
+}
+
+.mempelai_kicker {
+    margin-bottom: 0.7rem;
+
+    color: #a17c57;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-style: italic;
+}
+
+.mempelai_title {
+    margin-bottom: 1rem;
+
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.mempelai_description {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.9;
+}
+
+/* Container kartu */
+
+.mempelai_container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 2rem;
+
+    width: min(100%, 65rem);
+    margin: 0 auto;
+}
+
+/* Kartu mempelai */
+
+.mempelai_card {
+    min-width: 0;
+    padding: 1.5rem;
+
+    text-align: center;
+
+    background: rgba(255, 250, 244, 0.8);
+    border: 1px solid rgba(151, 113, 78, 0.22);
+    box-shadow: 0 0.8rem 2rem rgba(91, 70, 54, 0.07);
+}
+
+/* Foto */
+
+.mempelai_photo {
+    width: min(100%, 17rem);
+    aspect-ratio: 4 / 5;
+
+    margin: 0 auto 1.5rem;
+    padding: 0.45rem;
+
+    border: 1px solid rgba(151, 113, 78, 0.3);
+    background: #fffaf4;
+}
+
+.mempelai_photo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Informasi mempelai */
+
+.mempelai_role {
+    margin-bottom: 0.5rem;
+
+    color: #a17c57;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.mempelai_name {
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.mempelai_fullname {
+    margin-top: 0.3rem;
+
+    color: #796959;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+/* Garis dekoratif */
+
+.mempelai_divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+
+    width: min(100%, 12rem);
+    margin: 1.3rem auto;
+
+    color: #b28a60;
+}
+
+.mempelai_divider span {
+    flex: 1;
+    height: 1px;
+    background: rgba(151, 113, 78, 0.4);
+}
+
+.mempelai_divider i {
+    font-size: 0.9rem;
+}
+
+/* Nama orang tua */
+
+.mempelai_parent {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.9;
+}
+
+.mempelai_parent strong {
+    color: #6f5039;
+    font-weight: 600;
+}
+
+/* Simbol penghubung */
+
+.mempelai_connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 3.5rem;
+    height: 3.5rem;
+
+    color: #a47a51;
+    background: rgba(255, 250, 244, 0.85);
+    border: 1px solid rgba(151, 113, 78, 0.3);
+    border-radius: 50%;
+}
+
+.mempelai_connector i {
+    font-size: 1.2rem;
+}
+
+/* Kutipan */
+
+.mempelai_quote {
+    max-width: 42rem;
+    margin: 3.5rem auto 0;
+
+    color: #796959;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.mempelai_verse {
+    margin-top: 0.8rem;
+
+    color: #a17c57;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* SECTION DETAIL ACARA */
+
+.detail_acara {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: 6rem 6%;
+
+    color: #5b4636;
+
+    background: linear-gradient(
+        135deg,
+        #f8f1e8 0%,
+        #fffaf4 50%,
+        #efe3d4 100%
+    );
+}
+
+
+/* ORNAMEN DEKORATIF */
+
+.detail_acara_decor {
+    position: absolute;
+    z-index: -1;
+
+    width: 18rem;
+    height: 18rem;
+
+    border: 1px solid rgba(151, 113, 78, 0.2);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.detail_acara_decor::before,
+.detail_acara_decor::after {
+    position: absolute;
+    content: "";
+
+    border: 1px solid rgba(151, 113, 78, 0.15);
+    border-radius: 50%;
+}
+
+.detail_acara_decor::before {
+    inset: 1rem;
+}
+
+.detail_acara_decor::after {
+    inset: 2rem;
+}
+
+.detail_acara_decor_top {
+    top: -9rem;
+    right: -7rem;
+}
+
+.detail_acara_decor_bottom {
+    bottom: -10rem;
+    left: -7rem;
+}
+
+
+/* HEADER */
+
+.detail_acara_header {
+    width: min(100%, 42rem);
+    margin: 0 auto 3.5rem;
+
+    text-align: center;
+}
+
+.detail_acara_kicker {
+    margin-bottom: 0.7rem;
+
+    color: #a17c57;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-style: italic;
+}
+
+.detail_acara_title {
+    margin-bottom: 1rem;
+
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.detail_acara_description {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.9;
+}
+
+
+/* CONTAINER KARTU ACARA */
+
+.detail_acara_container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 2rem;
+
+    width: min(100%, 68rem);
+    margin: 0 auto;
+}
+
+
+/* KARTU ACARA */
+
+.detail_acara_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 0;
+    padding: 2.2rem 1.8rem;
+
+    text-align: center;
+
+    background: rgba(255, 250, 244, 0.88);
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    box-shadow: 0 0.8rem 2rem rgba(91, 70, 54, 0.07);
+
+    transition:
+        transform 250ms ease,
+        box-shadow 250ms ease;
+}
+
+.detail_acara_card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 1.2rem 2.5rem rgba(91, 70, 54, 0.12);
+}
+
+
+/* IKON ACARA */
+
+.detail_acara_icon {
+    display: grid;
+    place-items: center;
+
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+
+    color: #a47a51;
+    background: #f5e9da;
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    border-radius: 50%;
+}
+
+.detail_acara_icon i {
+    font-size: 1.5rem;
+}
+
+
+/* JUDUL KARTU */
+
+.detail_acara_label {
+    margin-bottom: 0.5rem;
+
+    color: #a17c57;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.detail_acara_name {
+    color: #6f5039;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-weight: 500;
+}
+
+
+/* GARIS DEKORATIF */
+
+.detail_acara_divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+
+    width: min(100%, 12rem);
+    margin: 1.3rem auto 1.8rem;
+
+    color: #b28a60;
+}
+
+.detail_acara_divider span {
+    flex: 1;
+    height: 1px;
+
+    background: rgba(151, 113, 78, 0.4);
+}
+
+.detail_acara_divider i {
+    font-size: 0.85rem;
+}
+
+
+/* INFORMASI ACARA */
+
+.detail_acara_info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    width: 100%;
+
+    text-align: left;
+}
+
+.detail_acara_item {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.8rem;
+}
+
+.detail_acara_item > i {
+    padding-top: 0.2rem;
+
+    color: #a47a51;
+    font-size: 1.15rem;
+    text-align: center;
+}
+
+.detail_acara_item h4 {
+    margin-bottom: 0.4rem;
+
+    color: #6f5039;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.detail_acara_item p {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+.detail_acara_item .detail_acara_address {
+    margin-top: 0.3rem;
+
+    color: #958575;
+    font-size: 0.75rem;
+}
+
+
+/* CARD PETA LOKASI */
+
+.detail_acara_map_card {
+    width: min(100%, 68rem);
+    margin: 3rem auto 0;
+
+    overflow: hidden;
+
+    background: rgba(255, 250, 244, 0.95);
+    border: 1px solid rgba(151, 113, 78, 0.25);
+    border-radius: 0.8rem;
+
+    box-shadow: 0 0.8rem 2rem rgba(91, 70, 54, 0.08);
+}
+
+
+/* Header peta */
+
+.detail_acara_map_header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1.3rem 1.5rem;
+
+    color: #6f5039;
+    border-bottom: 1px solid rgba(151, 113, 78, 0.2);
+}
+
+.detail_acara_map_header > i {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+
+    width: 3rem;
+    height: 3rem;
+
+    color: #a47a51;
+    background: #f5e9da;
+    border-radius: 50%;
+
+    font-size: 1.2rem;
+}
+
+.detail_acara_map_header h3 {
+    margin-bottom: 0.3rem;
+
+    color: #6f5039;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.detail_acara_map_header p {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+
+/* Area iframe */
+
+.detail_acara_map {
+    position: relative;
+
+    width: 100%;
+    height: clamp(280px, 45vw, 450px);
+}
+
+.detail_acara_map iframe {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+}
+
+
+/* KUTIPAN PENUTUP */
+
+.detail_acara_quote {
+    width: min(100%, 42rem);
+    margin: 3.5rem auto 0;
+
+    color: #796959;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* detail acara ends */
+
+/* SECTION COUNTDOWN */
+
+.countdown {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: 5rem 5%;
+
+    color: #5b4636;
+
+    background: linear-gradient(
+        135deg,
+        #fffaf4 0%,
+        #f8f1e8 50%,
+        #efe3d4 100%
+    );
+}
+
+
+/* ORNAMEN DEKORATIF */
+
+.countdown_decor {
+    position: absolute;
+    z-index: -1;
+
+    width: 17rem;
+    height: 17rem;
+
+    border: 1px solid rgba(151, 113, 78, 0.2);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.countdown_decor::before,
+.countdown_decor::after {
+    position: absolute;
+    content: "";
+
+    border: 1px solid rgba(151, 113, 78, 0.15);
+    border-radius: 50%;
+}
+
+.countdown_decor::before {
+    inset: 1rem;
+}
+
+.countdown_decor::after {
+    inset: 2rem;
+}
+
+.countdown_decor_top {
+    top: -9rem;
+    left: -7rem;
+}
+
+.countdown_decor_bottom {
+    right: -7rem;
+    bottom: -9rem;
+}
+
+
+/* CONTAINER */
+
+.countdown_container {
+    width: min(100%, 65rem);
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+
+/* HEADER */
+
+.countdown_header {
+    width: min(100%, 42rem);
+    margin: 0 auto 2rem;
+}
+
+.countdown_kicker {
+    margin-bottom: 0.7rem;
+
+    color: #a17c57;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.4rem;
+    font-style: italic;
+}
+
+.countdown_title {
+    margin-bottom: 1rem;
+
+    color: #6f5039;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3rem, 6vw, 4.8rem);
+    font-weight: 400;
+    line-height: 1.25;
+}
+
+.countdown_description {
+    color: #796959;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.9;
+}
+
+
+/* TANGGAL PERNIKAHAN */
+
+.countdown_date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+
+    margin: 2rem auto;
+
+    color: #866044;
+}
+
+.countdown_date i {
+    font-size: 1rem;
+}
+
+.countdown_date p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+}
+
+
+/* CONTAINER TIMER */
+
+.countdown_timer {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+
+    width: min(100%, 48rem);
+    margin: 0 auto;
+}
+
+
+/* KOTAK COUNTDOWN */
+
+.countdown_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 9rem;
+    padding: 1.5rem 0.8rem;
+
+    background: rgba(255, 250, 244, 0.9);
+    border: 1px solid rgba(151, 113, 78, 0.3);
+    border-radius: 0.7rem;
+
+    box-shadow: 0 0.6rem 1.8rem rgba(91, 70, 54, 0.07);
+
+    transition:
+        transform 250ms ease,
+        box-shadow 250ms ease;
+}
+
+.countdown_box:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 1rem 2rem rgba(91, 70, 54, 0.12);
+}
+
+
+/* ANGKA COUNTDOWN */
+
+.countdown_number {
+    display: block;
+
+    color: #866044;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1.2;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* LABEL COUNTDOWN */
+
+.countdown_label {
+    display: block;
+
+    margin-top: 0.6rem;
+
+    color: #958575;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+
+/* PESAN COUNTDOWN */
+
+.countdown_message {
+    margin-top: 2rem;
+
+    color: #796959;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    line-height: 1.8;
+}
+
+
+/* ORNAMEN HATI */
+
+.countdown_ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    width: min(100%, 12rem);
+    margin: 1.5rem auto 0;
+
+    color: #b28a60;
+}
+
+.countdown_ornament span {
+    flex: 1;
+    height: 1px;
+
+    background: rgba(151, 113, 78, 0.4);
+}
+
+.countdown_ornament i {
+    font-size: 0.9rem;
+}
+
+/* FOTO DI BAWAH COUNTDOWN */
+
+.countdown {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Container foto */
+.countdown_photo {
+    position: relative;
+    width: calc(100% + 10%);
+    height: clamp(280px, 45vw, 600px);
+    margin: 3rem -5% 0;
+    overflow: hidden;
+}
+
+/* Gambar utama */
+.countdown_photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Efek blur dan gradasi di bagian atas foto */
+.countdown_photo::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        to bottom,
+        #f5eee5 0%,
+        rgba(245, 238, 229, 0.85) 25%,
+        rgba(245, 238, 229, 0.45) 60%,
+        transparent 100%
+    );
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    mask-image: linear-gradient(
+        to bottom,
+        black 0%,
+        rgba(0, 0, 0, 0.8) 45%,
+        transparent 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        black 0%,
+        rgba(0, 0, 0, 0.8) 45%,
+        transparent 100%
+    );
+}
+
+/* blur bawah */
+.countdown_photo::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        to top,
+        #f5eee5 0%,
+        rgba(245, 238, 229, 0.85) 25%,
+        rgba(245, 238, 229, 0.45) 60%,
+        transparent 100%
+    );
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    mask-image: linear-gradient(
+        to top,
+        black 0%,
+        rgba(0, 0, 0, 0.8) 45%,
+        transparent 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to top,
+        black 0%,
+        rgba(0, 0, 0, 0.8) 45%,
+        transparent 100%
+    );
+}
+
+/* countdown ends */
+
+/* GALERI FOTO */
+
+.galeri_foto {
+    position: relative;
+    padding: 8rem 5%;
+    overflow: hidden;
+    isolation: isolate;
+
+    background: linear-gradient(
+        180deg,
+        #f5eee5 0%,
+        #f9f5ef 45%,
+        #f0e7dc 100%
+    );
+}
+
+.galeri_container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+
+/* DEKORASI BACKGROUND */
+
+.galeri_decor {
+    position: absolute;
+    width: 28rem;
+    height: 28rem;
+    border: 1px solid rgba(166, 124, 82, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.galeri_decor_top {
+    top: -15rem;
+    right: -10rem;
+    box-shadow:
+        0 0 0 2rem rgba(166, 124, 82, 0.025),
+        0 0 0 4rem rgba(166, 124, 82, 0.02);
+}
+
+
+/* HEADER GALERI */
+
+.galeri_header {
+    max-width: 70rem;
+    margin: 0 auto 4rem;
+    text-align: center;
+}
+
+.galeri_kicker {
+    margin-bottom: 1rem;
+    color: #a67c52;
+    font-family: "Great Vibes", cursive;
+    font-size: 2.8rem;
+    font-weight: 400;
+}
+
+.galeri_title {
+    margin-bottom: 1.5rem;
+    color: #49382c;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.galeri_description {
+    max-width: 62rem;
+    margin: 0 auto;
+    color: #76685c;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.9;
+}
+
+
+/* ORNAMEN PEMISAH */
+
+.galeri_ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 2rem;
+    color: #b18a62;
+    font-size: 1.3rem;
+}
+
+.galeri_ornament span {
+    display: block;
+    width: 5rem;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #b18a62
+    );
+}
+
+.galeri_ornament span:last-child {
+    transform: rotate(180deg);
+}
+
+
+/* GRID FOTO */
+
+.galeri_grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+
+/* ITEM FOTO */
+
+.galeri_item {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    padding: 0;
+    overflow: hidden;
+
+    border: 0.7rem solid rgba(255, 255, 255, 0.85);
+    border-radius: 0.8rem;
+
+    background: #e8ddd0;
+    box-shadow: 0 0.8rem 2.5rem rgba(75, 53, 35, 0.09);
+
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.galeri_item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    transition:
+        transform 0.6s ease,
+        filter 0.4s ease;
+}
+
+
+/* OVERLAY FOTO */
+
+.galeri_overlay {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+    font-size: 2.8rem;
+
+    background: rgba(54, 39, 28, 0.3);
+    opacity: 0;
+
+    transition: opacity 0.4s ease;
+}
+
+/* FOOTER GALERI */
+
+.galeri_footer {
+    margin-top: 3.5rem;
+    color: #8a7562;
+    font-family: "Great Vibes", cursive;
+    font-size: 2.5rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+/* LIGHTBOX */
+
+.galeri_lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5rem 7rem;
+
+    background: rgba(30, 24, 20, 0.94);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.galeri_lightbox.is_open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.galeri_lightbox_image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 0.4rem;
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+
+/* TOMBOL LIGHTBOX */
+
+.galeri_lightbox_close,
+.galeri_lightbox_prev,
+.galeri_lightbox_next {
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 4.5rem;
+    height: 4.5rem;
+
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+
+    font-size: 1.8rem;
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.galeri_lightbox_close:hover,
+.galeri_lightbox_prev:hover,
+.galeri_lightbox_next:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.galeri_lightbox_close {
+    top: 2.5rem;
+    right: 3rem;
+}
+
+.galeri_lightbox_prev {
+    left: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.galeri_lightbox_next {
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.galeri_lightbox_prev:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.galeri_lightbox_next:hover {
+    transform: translateY(-50%) scale(1.08);
+}
+
+.galeri_lightbox_counter {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    margin: 0;
+    color: #fff;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.15rem;
+}
+
+/* galeri ends */
+
+/* LOVE STORY SECTION */
+
+.love_story {
+    position: relative;
+    padding: 7rem 8%;
+    overflow: hidden;
+    background: linear-gradient(
+        180deg,
+        #f5eee5 0%,
+        #fffaf4 50%,
+        #f5eee5 100%
+    );
+}
+
+/* Ornamen lingkaran di sudut */
+
+.love_story::before,
+.love_story::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 1px solid rgba(174, 132, 91, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.love_story::before {
+    top: 5rem;
+    left: -180px;
+}
+
+.love_story::after {
+    right: -180px;
+    bottom: 5rem;
+}
+
+/* HEADER */
+
+.love_story_header {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto 5rem;
+    text-align: center;
+}
+
+.love_story_subtitle {
+    display: block;
+    margin-bottom: 1rem;
+    color: #ae845b;
+    font-size: 1.5rem;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.love_story_title {
+    margin-bottom: 1.5rem;
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 500;
+}
+
+.love_story_title span {
+    color: #b58a5a;
+    font-style: italic;
+}
+
+.love_story_description {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.35rem;
+    line-height: 1.9;
+}
+
+/* Ornamen hati */
+
+.love_story_ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    color: #b58a5a;
+}
+
+.love_story_ornament span {
+    width: 70px;
+    height: 1px;
+    background: #c9aa87;
+}
+
+.love_story_ornament i {
+    font-size: 1.4rem;
+}
+
+/* TIMELINE */
+
+.love_story_timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Garis vertikal timeline */
+
+.love_story_timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        #c9aa87 5%,
+        #c9aa87 95%,
+        transparent
+    );
+}
+
+/* Setiap item cerita */
+
+.love_story_item {
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin-bottom: 5rem;
+}
+
+.love_story_item:last-child {
+    margin-bottom: 0;
+}
+
+/* Posisi kartu bergantian */
+
+.love_story_item:nth-child(odd) {
+    justify-content: flex-start;
+    padding-right: calc(50% + 3.5rem);
+}
+
+.love_story_item:nth-child(even) {
+    justify-content: flex-end;
+    padding-left: calc(50% + 3.5rem);
+}
+
+/* Ikon penanda timeline */
+
+.love_story_marker {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    transform: translateX(-50%);
+    border: 1px solid #d8bea0;
+    border-radius: 50%;
+    background: #fffaf4;
+    color: #b58a5a;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 15px rgba(118, 86, 62, 0.08);
+}
+
+/* CARD */
+
+.love_story_card {
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(174, 132, 91, 0.18);
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 8px 30px rgba(118, 86, 62, 0.07);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.love_story_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 35px rgba(118, 86, 62, 0.12);
+}
+
+/* Foto cerita */
+
+.love_story_image {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+}
+
+.love_story_image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+.love_story_card:hover .love_story_image img {
+    transform: scale(1.04);
+}
+
+/* Isi cerita */
+
+.love_story_content {
+    padding: 2.5rem;
+}
+
+.love_story_date {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #ae845b;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.love_story_content h3 {
+    margin-bottom: 1.2rem;
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+}
+
+.love_story_content p {
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.9;
+}
+
+/* FOOTER */
+
+.love_story_footer {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+    margin: 6rem auto 0;
+    text-align: center;
+}
+
+.love_story_footer > i {
+    margin-bottom: 1.5rem;
+    color: #b58a5a;
+    font-size: 2.5rem;
+}
+
+.love_story_footer p {
+    color: #796b5e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.5rem;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.love_story_signature {
+    display: block;
+    margin-top: 1.5rem;
+    color: #76563e;
+    font-family: "Great Vibes", cursive;
+    font-size: 4rem;
+}
+
+/* Animasi awal kartu Love Story */
+
+.love_story_item {
+    opacity: 0;
+    transform: translateY(35px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+/* Ketika kartu terlihat di layar */
+
+.love_story_item.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* love story ends */
+
+/* RSVP & UCAPAN */
+
+.rsvp_ucapan {
+    position: relative;
+    padding: 7rem 8%;
+    overflow: hidden;
+
+    background: linear-gradient(
+        180deg,
+        #fffaf4 0%,
+        #f5eee5 50%,
+        #fffaf4 100%
+    );
+}
+
+/* Ornamen latar belakang */
+
+.rsvp_ucapan::before,
+.rsvp_ucapan::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 1px solid rgba(174, 132, 91, 0.15);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.rsvp_ucapan::before {
+    top: 5rem;
+    left: -180px;
+}
+
+.rsvp_ucapan::after {
+    right: -180px;
+    bottom: 5rem;
+}
+
+/* HEADER */
+
+.rsvp_header {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto 5rem;
+    text-align: center;
+}
+
+.rsvp_subtitle {
+    display: block;
+    margin-bottom: 1rem;
+
+    color: #ae845b;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.rsvp_title {
+    margin-bottom: 1.5rem;
+
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 500;
+}
+
+.rsvp_title span {
+    color: #b58a5a;
+    font-style: italic;
+}
+
+.rsvp_description {
+    max-width: 600px;
+    margin: 0 auto;
+
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.35rem;
+    line-height: 1.9;
+}
+
+.rsvp_ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+
+    color: #b58a5a;
+}
+
+.rsvp_ornament span {
+    width: 70px;
+    height: 1px;
+    background: #c9aa87;
+}
+
+.rsvp_ornament i {
+    font-size: 1.4rem;
+}
+
+/* CONTAINER KARTU */
+
+.rsvp_container {
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 3rem;
+
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* KARTU FORM */
+
+.rsvp_card {
+    padding: 3rem;
+
+    border: 1px solid rgba(174, 132, 91, 0.2);
+    border-radius: 1.5rem;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    box-shadow: 0 8px 30px rgba(118, 86, 62, 0.07);
+}
+
+.rsvp_card_header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.rsvp_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto 1.5rem;
+
+    border: 1px solid #dfc6a8;
+    border-radius: 50%;
+
+    background: #fffaf4;
+    color: #b58a5a;
+
+    font-size: 2.3rem;
+}
+
+.rsvp_card_header h3 {
+    margin-bottom: 1rem;
+
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+}
+
+.rsvp_card_header p {
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* FORM GROUP */
+
+.rsvp_form_group {
+    margin-bottom: 2rem;
+}
+
+.rsvp_form_group label {
+    display: block;
+    margin-bottom: 0.8rem;
+
+    color: #76563e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.rsvp_form_group input,
+.rsvp_form_group select,
+.rsvp_form_group textarea {
+    display: block;
+    width: 100%;
+
+    padding: 1.3rem 1.5rem;
+
+    border: 1px solid #e0d2c2;
+    border-radius: 0.8rem;
+    outline: none;
+
+    background: #fffdf9;
+    color: #5f4a39;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.rsvp_form_group input,
+.rsvp_form_group select {
+    min-height: 4.8rem;
+}
+
+.rsvp_form_group textarea {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.rsvp_form_group input::placeholder,
+.rsvp_form_group textarea::placeholder {
+    color: #b5a79a;
+}
+
+.rsvp_form_group input:focus,
+.rsvp_form_group select:focus,
+.rsvp_form_group textarea:focus {
+    border-color: #b58a5a;
+
+    box-shadow: 0 0 0 3px rgba(181, 138, 90, 0.12);
+}
+
+.rsvp_form_group small {
+    display: block;
+    margin-top: 0.7rem;
+
+    color: #8b7a6a;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* TOMBOL */
+
+.rsvp_submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    width: 100%;
+    min-height: 5rem;
+    padding: 1.3rem 2rem;
+
+    border: 1px solid #a97d50;
+    border-radius: 0.8rem;
+
+    background: #a97d50;
+    color: #fffaf4;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.rsvp_submit:hover {
+    transform: translateY(-2px);
+
+    background: #8e6742;
+
+    box-shadow: 0 6px 15px rgba(118, 86, 62, 0.15);
+}
+
+.rsvp_submit:focus-visible {
+    outline: 2px solid #76563e;
+    outline-offset: 3px;
+}
+
+.rsvp_submit:active {
+    transform: translateY(0);
+}
+
+/* Pesan status formulir */
+
+.rsvp_form_message,
+.ucapan_form_message {
+    margin-top: 1.5rem;
+
+    color: #76563e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+
+.rsvp_form_message:empty,
+.ucapan_form_message:empty {
+    display: none;
+}
+
+/* DAFTAR UCAPAN */
+
+.ucapan_list_container {
+    position: relative;
+    z-index: 1;
+
+    max-width: 900px;
+    margin: 7rem auto 0;
+}
+
+.ucapan_list_header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.ucapan_list_header h3 {
+    margin-bottom: 1rem;
+
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+}
+
+.ucapan_list_header p {
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+/* Daftar pesan */
+
+.ucapan_list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.ucapan_item {
+    padding: 2.5rem;
+
+    border: 1px solid rgba(174, 132, 91, 0.18);
+    border-radius: 1rem;
+
+    background: rgba(255, 255, 255, 0.8);
+
+    box-shadow: 0 5px 20px rgba(118, 86, 62, 0.05);
+
+    overflow-wrap: anywhere;
+}
+
+.ucapan_item_header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.ucapan_avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 4rem;
+    height: 4rem;
+
+    border-radius: 50%;
+
+    background: #f0e2d1;
+    color: #8e6742;
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+}
+
+.ucapan_item_header h4 {
+    color: #76563e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.ucapan_item p {
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+.ucapan_empty {
+    padding: 3rem 2rem;
+
+    border: 1px dashed #d7bda0;
+    border-radius: 1rem;
+
+    text-align: center;
+    color: #8b7a6a;
+}
+
+.ucapan_empty i {
+    margin-bottom: 1.5rem;
+    color: #b58a5a;
+    font-size: 2.5rem;
+}
+
+.ucapan_empty p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+#rsvp-guests-group[hidden] {
+    display: none !important;
+}
+
+/* WEDDING GIFT */
+
+.wedding_gift {
+    position: relative;
+    z-index: 1;
+
+    max-width: 1000px;
+    margin: 7rem auto 0;
+    padding: 4rem 3rem;
+
+    border: 1px solid rgba(174, 132, 91, 0.2);
+    border-radius: 2rem;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    box-shadow: 0 10px 35px rgba(118, 86, 62, 0.06);
+}
+
+/* Header */
+
+.wedding_gift_header {
+    max-width: 650px;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+}
+
+.wedding_gift_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto 1.5rem;
+
+    border: 1px solid #dfc6a8;
+    border-radius: 50%;
+
+    background: #fffaf4;
+    color: #b58a5a;
+
+    font-size: 2.5rem;
+}
+
+.wedding_gift_subtitle {
+    display: block;
+    margin-bottom: 0.8rem;
+
+    color: #ae845b;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    letter-spacing: 2px;
+}
+
+.wedding_gift_header h3 {
+    margin-bottom: 1.5rem;
+
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.wedding_gift_header p {
+    color: #796b5e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.9;
+}
+
+/* Container kartu */
+
+.wedding_gift_container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+}
+
+/* Kartu rekening */
+
+.gift_card {
+    position: relative;
+    min-width: 0;
+    padding: 2.5rem;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 1.5rem;
+
+    background: linear-gradient(
+        135deg,
+        #f4e5d0 0%,
+        #e7d0b1 50%,
+        #d7b58e 100%
+    );
+
+    box-shadow: 0 10px 25px rgba(118, 86, 62, 0.12);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.gift_card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: 0 15px 30px rgba(118, 86, 62, 0.16);
+}
+
+/* Ornamen lingkaran */
+
+.gift_card::before {
+    content: "";
+    position: absolute;
+
+    top: -75px;
+    right: -65px;
+
+    width: 180px;
+    height: 180px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.gift_card::after {
+    content: "";
+    position: absolute;
+
+    top: -45px;
+    right: -35px;
+
+    width: 120px;
+    height: 120px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+/* Bagian atas kartu */
+
+.gift_card_top {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-bottom: 2.5rem;
+}
+
+.gift_card_label {
+    color: #76563e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.8rem;
+    font-style: italic;
+}
+
+/* Logo bank berbentuk teks */
+
+.gift_bank_logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 6rem;
+    min-height: 3rem;
+    padding: 0.5rem 1rem;
+
+    border-radius: 0.5rem;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    font-family: Arial, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+/* Nama bank */
+
+.gift_bank_name {
+    position: relative;
+    z-index: 1;
+
+    margin-bottom: 1rem;
+
+    color: #76563e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+/* Nomor rekening dan tombol salin */
+
+.gift_card_number {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    padding-bottom: 2rem;
+
+    border-bottom: 1px solid rgba(118, 86, 62, 0.2);
+}
+
+.gift_card_number > span {
+    color: #5e4430;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+}
+
+/* Tombol salin */
+
+.gift_copy_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+
+    flex-shrink: 0;
+
+    padding: 0.9rem 1.2rem;
+
+    border: 1px solid rgba(118, 86, 62, 0.25);
+    border-radius: 0.7rem;
+
+    background: rgba(255, 250, 244, 0.8);
+    color: #76563e;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.gift_copy_button:hover {
+    background: #76563e;
+    color: #fffaf4;
+}
+
+.gift_copy_button:focus-visible {
+    outline: 2px solid #76563e;
+    outline-offset: 3px;
+}
+
+.gift_copy_button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+/* Bagian bawah kartu */
+
+.gift_card_bottom {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+.gift_owner {
+    min-width: 0;
+}
+
+.gift_owner span {
+    display: block;
+    margin-bottom: 0.7rem;
+
+    color: #86694e;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+}
+
+.gift_owner strong {
+    display: block;
+
+    color: #5e4430;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+
+    overflow-wrap: anywhere;
+}
+
+.gift_card_heart {
+    flex-shrink: 0;
+    color: rgba(118, 86, 62, 0.65);
+    font-size: 2rem;
+}
+
+/* Notifikasi tombol salin */
+
+.gift_copy_message {
+    position: relative;
+    z-index: 1;
+
+    min-height: 1.5rem;
+    margin-top: 1rem;
+
+    color: #5e4430;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.gift_copy_message:empty {
+    display: none;
+}
+
+/* Footer */
+
+.wedding_gift_footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    margin-top: 3rem;
+
+    color: #796b5e;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    font-style: italic;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.wedding_gift_footer i {
+    flex-shrink: 0;
+    color: #b58a5a;
+    font-size: 1.5rem;
+}
+
+.gift_bank_image {
+    display: block;
+    width: 75px;
+    height: 35px;
+    object-fit: contain;
+    object-position: right center;
+}
+
+/* SECTION PENUTUP */
+
+.penutup {
+    position: relative;
+    width: 100%;
+    padding: 9rem 7%;
+    background: linear-gradient(
+        180deg,
+        #f5eee5 0%,
+        #eee2d3 50%,
+        #f5eee5 100%
+    );
+    overflow: hidden;
+    text-align: center;
+}
+
+.penutup_container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Ornamen */
+
+.penutup_ornamen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.penutup_ornamen span {
+    display: block;
+    width: 7rem;
+    height: 1px;
+    background: #b89a65;
+}
+
+.penutup_ornamen i {
+    font-size: 1.6rem;
+    color: #b89a65;
+}
+
+/* Subtitle */
+
+.penutup_subtitle {
+    margin-bottom: 1.5rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: #8a7156;
+}
+
+/* Judul */
+
+.penutup_title {
+    margin-bottom: 3rem;
+    font-family: "Great Vibes", cursive;
+    font-size: 7rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #795c43;
+}
+
+/* Deskripsi */
+
+.penutup_description {
+    max-width: 650px;
+    margin: 0 auto 1.8rem;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 2;
+    color: #786958;
+}
+
+/* Tanggal */
+
+.penutup_tanggal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 4rem 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.8rem;
+    color: #795c43;
+}
+
+.penutup_tanggal_angka {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 7rem;
+    height: 7rem;
+    box-sizing: border-box;
+
+    border: 1px solid #b89a65;
+    border-radius: 50%;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1;
+
+    color: #795c43;
+}
+
+/* Nama Mempelai */
+
+.penutup_nama {
+    margin: 3rem 0;
+}
+
+.penutup_nama h3 {
+    font-family: "Great Vibes", cursive;
+    font-size: 5rem;
+    font-weight: 400;
+    color: #795c43;
+}
+
+.penutup_nama h3 span {
+    padding: 0 0.5rem;
+    color: #b89a65;
+}
+
+/* Ornamen Bawah */
+
+.penutup_ornamen_bawah {
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+}
+
+/* Footer */
+
+.penutup_footer {
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(184, 154, 101, 0.35);
+}
+
+.penutup_footer p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #8a7156;
+}
+
+.penutup_footer .penutup_footer_nama {
+    margin-top: 0.5rem;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #795c43;
+}
+
+/* CREATED BY */
+
+.penutup_credit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 2.5rem;
+
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #a18b75;
+}
+
+.penutup_credit_nama {
+    color: #b38b59;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 480px) {
+  .cover {
+    padding: 1.25rem 0.8rem 5.5rem;
+    background-position: 54% center;
+  }
+
+  .cover_content {
+    padding: 2rem 1rem;
+  }
+
+  .cover_eyebrow {
+    letter-spacing: 0.2em;
+  }
+
+  .cover_guest_label {
+    margin-top: 1.5rem;
+  }
+
+  .cover_ornament {
+    width: 9rem;
+    height: 9rem;
+  }
+}
+
+/* NAVIGASI RESPONSIF: TABLET */
+
+@media (max-width: 1024px) {
+    .navbar {
+        top: 0;
+        bottom: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.8rem 4%;
+    }
+
+    .navbar_logo {
+        display: block;
+        font-size: 1.8rem;
+    }
+
+    /* Tombol hamburger */
+    .navbar_toggle {
+        display: flex;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    /* Dropdown navigasi */
+    .navbar_menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+
+        width: min(390px, 90vw);
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+
+        padding: 0.5rem 1rem;
+
+        background: #fffaf4;
+        border: 1px solid rgba(151, 113, 78, 0.2);
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 0.5rem 1.5rem rgba(91, 70, 54, 0.12);
+
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-8px);
+
+        transition:
+            opacity 200ms ease,
+            transform 200ms ease,
+            visibility 200ms ease;
+    }
+
+    /* Dropdown saat hamburger diklik */
+    .navbar_menu.menu_open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .navbar_link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.8rem;
+
+        padding: 0.85rem 0.5rem;
+        font-size: 0.8rem;
+        white-space: normal;
+
+        border-bottom: 1px solid rgba(151, 113, 78, 0.1);
+    }
+
+    .navbar_link:last-child {
+        border-bottom: none;
+    }
+}
+
+/* NAVIGASI RESPONSIF: HP */
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0.7rem 5%;
+    }
+
+    .navbar_logo {
+        font-size: 1.7rem;
+    }
+
+    .navbar_menu {
+        right: 0;
+        width: min(340px, 90vw);
+    }
+
+    .navbar_link {
+        font-size: 0.78rem;
+    }
+}
+
+/* AKSESIBILITAS */
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar,
+    .navbar_menu,
+    .navbar_toggle span {
+        transition: none;
+    }
+}
+
+/* RESPONSIVE: TABLET */
+
+@media (max-width: 768px) {
+    .home {
+        padding: 2rem 5%;
+    }
+
+    .home_content {
+        padding-top: 2.5rem;
+    }
+
+    .home_photo {
+        width: min(100%, 23rem);
+    }
+
+    .home_photo img {
+        height: 18rem;
+    }
+
+    .home_description {
+        font-size: 0.95rem;
+    }
+}
+
+/* RESPONSIVE: HP */
+
+@media (max-width: 480px) {
+    .home {
+        padding: 1.5rem 5%;
+    }
+
+    .home_header {
+        padding-bottom: 1rem;
+    }
+
+    .home_logo {
+        font-size: 2.3rem;
+    }
+
+    .home_header_icon {
+        width: 2.4rem;
+        height: 2.4rem;
+        font-size: 0.95rem;
+    }
+
+    .home_content {
+        padding-top: 2rem;
+    }
+
+    .home_kicker {
+        font-size: 1.2rem;
+    }
+
+    .home_title {
+        font-size: 2.5rem;
+    }
+
+    .home_description {
+        margin-bottom: 1.5rem;
+        font-size: 0.85rem;
+        line-height: 1.8;
+    }
+
+    .home_photo {
+        width: min(100%, 20rem);
+        margin-bottom: 1.5rem;
+        padding: 0.5rem;
+    }
+
+    .home_photo img {
+        height: 16rem;
+    }
+
+    .home_photo_caption {
+        font-size: 1.1rem;
+    }
+
+    .home_names {
+        font-size: 3.2rem;
+    }
+
+    .home_date {
+        font-size: 0.8rem;
+        letter-spacing: 0.15rem;
+    }
+
+    .home_next {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.8rem;
+    }
+
+    .home_decor {
+        width: 12rem;
+        height: 12rem;
+    }
+}
+
+/* RESPONSIVE TABLET */
+
+@media (max-width: 768px) {
+    .mempelai {
+        padding: 4.5rem 5%;
+    }
+
+    .mempelai_container {
+        gap: 1rem;
+    }
+
+    .mempelai_card {
+        padding: 1rem;
+    }
+
+    .mempelai_photo {
+        width: 100%;
+    }
+
+    .mempelai_name {
+        font-size: 3rem;
+    }
+
+    .mempelai_connector {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .mempelai_parent {
+        font-size: 0.75rem;
+    }
+}
+
+/* RESPONSIVE HP */
+
+@media (max-width: 600px) {
+    .mempelai {
+        padding: 4rem 5%;
+    }
+
+    .mempelai_header {
+        margin-bottom: 2.5rem;
+    }
+
+    .mempelai_description {
+        font-size: 0.82rem;
+    }
+
+    .mempelai_container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+
+        width: min(100%, 24rem);
+    }
+
+    .mempelai_card {
+        padding: 1.2rem;
+    }
+
+    .mempelai_photo {
+        width: min(100%, 17rem);
+    }
+
+    .mempelai_name {
+        font-size: 3.5rem;
+    }
+
+    .mempelai_parent {
+        font-size: 0.8rem;
+    }
+
+    .mempelai_connector {
+        margin: -0.8rem auto;
+    }
+
+    .mempelai_quote {
+        margin-top: 2.5rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* RESPONSIVE HP */
+
+@media (max-width: 600px) {
+
+    .detail_acara {
+        padding: 4rem 5%;
+    }
+
+    .detail_acara_header {
+        margin-bottom: 2.5rem;
+    }
+
+    .detail_acara_description {
+        font-size: 0.82rem;
+    }
+
+    .detail_acara_container {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.5rem;
+
+        width: min(100%, 25rem);
+    }
+
+    .detail_acara_card {
+        padding: 1.8rem 1.3rem;
+    }
+
+    .detail_acara_name {
+        font-size: 2rem;
+    }
+
+    .detail_acara_item p {
+        font-size: 0.8rem;
+    }
+
+    /* Card peta di HP */
+
+    .detail_acara_map_card {
+        margin-top: 2rem;
+        border-radius: 0.6rem;
+    }
+
+    .detail_acara_map_header {
+        padding: 1rem;
+    }
+
+    .detail_acara_map_header > i {
+        width: 2.6rem;
+        height: 2.6rem;
+
+        font-size: 1rem;
+    }
+
+    .detail_acara_map_header h3 {
+        font-size: 1.3rem;
+    }
+
+    .detail_acara_map_header p {
+        font-size: 0.72rem;
+    }
+
+    .detail_acara_map {
+        height: 300px;
+    }
+
+    .detail_acara_quote {
+        margin-top: 2.5rem;
+        font-size: 1.2rem;
+    }
+}
+
+
+/* AKSESIBILITAS */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .detail_acara_card {
+        transition: none;
+    }
+}
+
+/* RESPONSIVE COUNTDOWN - TABLET */
+
+@media (max-width: 900px) {
+
+    .countdown {
+        padding: 5rem 5%;
+    }
+
+    .countdown_timer {
+        gap: 0.9rem;
+    }
+
+    .countdown_box {
+        min-height: 8rem;
+    }
+
+    /* Foto di bawah Countdown */
+    .countdown_photo {
+        height: 400px;
+    }
+
+    .countdown_photo::before {
+        height: 130px;
+    }
+
+}
+
+
+/* RESPONSIVE COUNTDOWN - HP */
+
+@media (max-width: 600px) {
+
+    /* Section Countdown */
+    .countdown {
+        padding: 4rem 5%;
+    }
+
+    /* Header */
+    .countdown_header {
+        margin-bottom: 1.5rem;
+    }
+
+    .countdown_kicker {
+        font-size: 1.2rem;
+    }
+
+    .countdown_title {
+        font-size: clamp(2.8rem, 10vw, 3.5rem);
+    }
+
+    .countdown_description {
+        font-size: 0.8rem;
+        line-height: 1.8;
+    }
+
+    /* Tanggal pernikahan */
+    .countdown_date {
+        margin: 1.5rem auto;
+    }
+
+    .countdown_date p {
+        font-size: 0.72rem;
+    }
+
+    /* Kotak hitung mundur */
+    .countdown_timer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+        width: min(100%, 25rem);
+    }
+
+    .countdown_box {
+        min-height: 7.5rem;
+        padding: 1rem 0.5rem;
+        border-radius: 0.6rem;
+    }
+
+    .countdown_number {
+        font-size: 3rem;
+    }
+
+    .countdown_label {
+        margin-top: 0.4rem;
+        font-size: 0.68rem;
+    }
+
+    /* Pesan di bawah Countdown */
+    .countdown_message {
+        margin-top: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    /* Foto di bawah Countdown */
+    .countdown_photo {
+        height: 350px;
+        margin-top: 2rem;
+    }
+
+    /* Gradasi blur bagian atas foto */
+    .countdown_photo::before {
+        height: 110px;
+    }
+
+}
+
+
+/* AKSESIBILITAS COUNTDOWN */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .countdown_box {
+        transition: none;
+    }
+
+}
+
+/* EFEK HOVER */
+
+@media (hover: hover) {
+
+    .galeri_item:hover {
+        transform: translateY(-0.5rem);
+        box-shadow: 0 1.2rem 3rem rgba(75, 53, 35, 0.16);
+    }
+
+    .galeri_item:hover img {
+        transform: scale(1.07);
+    }
+
+    .galeri_item:hover .galeri_overlay {
+        opacity: 1;
+    }
+
+}
+
+/* RESPONSIVE TABLET */
+
+@media (max-width: 900px) {
+
+    .galeri_foto {
+        padding: 6rem 5%;
+    }
+
+    .galeri_header {
+        margin-bottom: 3rem;
+    }
+
+    .galeri_grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.5rem;
+    }
+
+    .galeri_item {
+        border-width: 0.5rem;
+    }
+
+    .galeri_footer {
+        font-size: 2.2rem;
+    }
+
+    .galeri_lightbox {
+        padding: 5rem 6rem;
+    }
+
+    .galeri_lightbox_close {
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .galeri_lightbox_prev {
+        left: 1.5rem;
+    }
+
+    .galeri_lightbox_next {
+        right: 1.5rem;
+    }
+
+}
+
+
+/* RESPONSIVE HP */
+
+@media (max-width: 600px) {
+
+    .galeri_foto {
+        padding: 4.5rem 5%;
+    }
+
+    .galeri_header {
+        margin-bottom: 2.5rem;
+    }
+
+    .galeri_kicker {
+        font-size: 2.2rem;
+    }
+
+    .galeri_title {
+        font-size: clamp(3rem, 10vw, 4rem);
+    }
+
+    .galeri_description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .galeri_ornament {
+        margin-top: 1.5rem;
+    }
+
+    .galeri_grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .galeri_item {
+        aspect-ratio: 3 / 4;
+        border-width: 0.35rem;
+        border-radius: 0.5rem;
+    }
+
+    .galeri_overlay {
+        font-size: 2rem;
+    }
+
+    .galeri_footer {
+        margin-top: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .galeri_lightbox {
+        padding: 5rem 1rem;
+    }
+
+    .galeri_lightbox_image {
+        max-width: 100%;
+        max-height: 75vh;
+    }
+
+    .galeri_lightbox_close {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .galeri_lightbox_prev,
+    .galeri_lightbox_next {
+        top: auto;
+        bottom: 2rem;
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .galeri_lightbox_prev {
+        left: calc(50% - 5rem);
+        transform: none;
+    }
+
+    .galeri_lightbox_next {
+        right: calc(50% - 5rem);
+        transform: none;
+    }
+
+    .galeri_lightbox_prev:hover,
+    .galeri_lightbox_next:hover {
+        transform: scale(1.05);
+    }
+
+    .galeri_lightbox_counter {
+        bottom: 3.3rem;
+        font-size: 1rem;
+    }
+
+}
+
+
+/* AKSESIBILITAS */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .galeri_item,
+    .galeri_item img,
+    .galeri_overlay,
+    .galeri_lightbox,
+    .galeri_lightbox_close,
+    .galeri_lightbox_prev,
+    .galeri_lightbox_next {
+        transition: none;
+    }
+
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+    .love_story {
+        padding: 6rem 6%;
+    }
+
+    .love_story_header {
+        margin-bottom: 4rem;
+    }
+
+    .love_story_item:nth-child(odd) {
+        padding-right: calc(50% + 2.5rem);
+    }
+
+    .love_story_item:nth-child(even) {
+        padding-left: calc(50% + 2.5rem);
+    }
+
+    .love_story_image {
+        height: 220px;
+    }
+
+    .love_story_content {
+        padding: 2rem;
+    }
+
+    .love_story_content h3 {
+        font-size: 2.5rem;
+    }
+
+    .love_story_content p {
+        font-size: 1.2rem;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .love_story {
+        padding: 5rem 5%;
+    }
+
+    .love_story_header {
+        margin-bottom: 4rem;
+    }
+
+    .love_story_subtitle {
+        font-size: 1.4rem;
+    }
+
+    .love_story_title {
+        font-size: 3.5rem;
+    }
+
+    .love_story_description {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    .love_story_ornament {
+        margin-top: 2rem;
+    }
+
+    .love_story_timeline::before {
+        left: 1.5rem;
+        transform: none;
+    }
+
+    .love_story_item,
+    .love_story_item:nth-child(odd),
+    .love_story_item:nth-child(even) {
+        justify-content: flex-start;
+        padding: 0 0 0 4.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .love_story_marker {
+        top: 1.5rem;
+        left: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.1rem;
+    }
+
+    .love_story_image {
+        height: 220px;
+    }
+
+    .love_story_content {
+        padding: 1.8rem;
+    }
+
+    .love_story_date {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .love_story_content h3 {
+        font-size: 2.5rem;
+    }
+
+    .love_story_content p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    .love_story_footer {
+        margin-top: 4rem;
+    }
+
+    .love_story_footer p {
+        font-size: 2.2rem;
+    }
+
+    .love_story_signature {
+        font-size: 3.5rem;
+    }
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+    /* RSVP & UCAPAN */
+    .rsvp_ucapan {
+        padding: 6rem 5%;
+    }
+
+    .rsvp_container {
+        gap: 2rem;
+    }
+
+    .rsvp_card {
+        padding: 2.5rem 2rem;
+    }
+
+    .rsvp_card_header h3 {
+        font-size: 2.5rem;
+    }
+
+    /* WEDDING GIFT */
+    .wedding_gift {
+        margin-top: 4rem;
+    }
+
+    .wedding_gift_container {
+        gap: 1.5rem;
+    }
+
+    .gift_card {
+        padding: 2rem;
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    /* RSVP & UCAPAN */
+    .rsvp_ucapan {
+        padding: 5rem 5%;
+    }
+
+    .rsvp_header {
+        margin-bottom: 3.5rem;
+    }
+
+    .rsvp_subtitle {
+        font-size: 1.4rem;
+    }
+
+    .rsvp_title {
+        font-size: 3.5rem;
+    }
+
+    .rsvp_description {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    .rsvp_container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .rsvp_card {
+        padding: 2.5rem 2rem;
+    }
+
+    .rsvp_card_header {
+        margin-bottom: 2rem;
+    }
+
+    .rsvp_card_header h3 {
+        font-size: 2.7rem;
+    }
+
+    .rsvp_form_group input,
+    .rsvp_form_group select,
+    .rsvp_form_group textarea {
+        font-size: 1.2rem;
+    }
+
+    .ucapan_list_container {
+        margin-top: 5rem;
+    }
+
+    .ucapan_list_header h3 {
+        font-size: 3rem;
+    }
+
+    .ucapan_item {
+        padding: 2rem;
+    }
+
+
+    /* WEDDING GIFT */
+    .wedding_gift {
+        margin-top: 3.5rem;
+    }
+
+    .wedding_gift_header {
+        margin-bottom: 2.5rem;
+    }
+
+    .wedding_gift_header h3 {
+        font-size: 3rem;
+    }
+
+    .wedding_gift_header p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+    }
+
+    /* Kartu rekening disusun satu kolom */
+    .wedding_gift_container {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+    }
+
+    .gift_card {
+        padding: 2rem;
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Logo bank */
+    .gift_bank_image {
+        width: 75px;
+        height: 35px;
+    }
+
+    /* Nomor rekening agar tidak keluar dari kartu */
+    .gift_account_number {
+        font-size: 1.8rem;
+        overflow-wrap: anywhere;
+    }
+
+    .gift_copy_button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .gift_copy_message {
+        font-size: 1.2rem;
+    }
+}
+
+
+/* MENGHORMATI PREFERENSI PENGGUNA
+   YANG MENGURANGI ANIMASI */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .rsvp_form_group input,
+    .rsvp_form_group select,
+    .rsvp_form_group textarea,
+    .rsvp_submit {
+        transition: none;
+    }
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+    .penutup {
+        padding: 7rem 6%;
+    }
+
+    .penutup_title {
+        font-size: 6rem;
+    }
+
+    .penutup_description {
+        font-size: 1.3rem;
+    }
+
+    .penutup_nama h3 {
+        font-size: 4.5rem;
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .penutup {
+        padding: 6rem 7%;
+    }
+
+    .penutup_ornamen {
+        gap: 1rem;
+    }
+
+    .penutup_ornamen span {
+        width: 5rem;
+    }
+
+    .penutup_subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 0.15rem;
+        line-height: 1.8;
+    }
+
+    .penutup_title {
+        margin-bottom: 2.5rem;
+        font-size: 5rem;
+    }
+
+    .penutup_description {
+        font-size: 1.15rem;
+        line-height: 1.9;
+    }
+
+    .penutup_tanggal {
+        margin: 3rem 0;
+        font-size: 1.6rem;
+    }
+
+    .penutup_tanggal_angka {
+        width: 6rem;
+        height: 6rem;
+        font-size: 3.5rem;
+    }
+
+    .penutup_nama h3 {
+        font-size: 3.8rem;
+    }
+
+    .penutup_footer p {
+        font-size: 1.1rem;
+    }
+
+    .penutup_footer .penutup_footer_nama {
+        font-size: 1.6rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .penutup_credit {
+        font-size: 0.9rem;
+        gap: 0.35rem;
+    }
+}
+
+/* Animasi masuk yang halus */
+@keyframes cover-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hormati preferensi pengguna yang mengurangi animasi */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
